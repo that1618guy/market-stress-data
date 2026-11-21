@@ -1,7 +1,8 @@
 """Assemble one aligned daily panel for the Washout research.
 Sources (all public): Cboe history files (VIX, VVIX, VIX3M, COR1M), Yahoo ^GSPC / SPY / BTC-USD bars,
 mirrored in public GitHub data repos; COR1M Oct 28 - Nov 19 2026 taken from Cboe's own CSV.
-Nov 20 2026 is provisional: the 3:57pm ET values from the reference screenshot."""
+Nov 20 2026 uses the official closes for the S&P 500, SPY, VIX and VVIX. COR1M is still the 3:57pm ET
+value from the reference screenshot and VIX3M carries Nov 19 forward: neither official close was reachable."""
 import sys, pandas as pd, numpy as np
 RAW = sys.argv[1]; OUT = sys.argv[2]
 
@@ -23,7 +24,7 @@ c1t  = cboe(f'{OUT}/cor1m_cboe_tail.csv', fmt='%m/%d/%Y')
 cor1m = pd.concat([c1, c1t[~c1t.index.isin(c1.index)]]).sort_index()
 cor1m = cor1m[~cor1m.index.duplicated(keep='last')]
 
-# trading calendar = SPX sessions; drop the partial Nov 20 bars, rebuild that day from the screenshot
+# trading calendar = SPX sessions; drop the partial Nov 20 bars, rebuild that day from its official closes
 end_full = pd.Timestamp('2026-11-19')
 cal = spx.index[(spx.index >= '1990-01-02') & (spx.index <= end_full)]
 P = pd.DataFrame(index=cal)
@@ -32,10 +33,9 @@ P['vix'] = vix.reindex(cal); P['vvix'] = vvix.reindex(cal)
 P['vix3m'] = vix3m.reindex(cal); P['cor1m'] = cor1m.reindex(cal)
 
 d20 = pd.Timestamp('2026-11-20')
-spy_prev = P.loc[end_full, 'spy']; spx_prev = P.loc[end_full, 'spx']
-P.loc[d20, ['spy','vix','vvix','cor1m']] = [687.32, 40.03, 146.36, 44.71]
-P.loc[d20, 'spx'] = spx_prev * 687.32 / spy_prev
-P['provisional'] = 0; P.loc[d20, 'provisional'] = 1
+P.loc[d20, ['spx','spy','vix','vvix']] = [6910.39, 689.81, 35.89, 138.03]   # official closes, as in the live feed
+P.loc[d20, 'cor1m'] = 44.71                                                    # 3:57pm ET screenshot; official close not reachable
+P['provisional'] = 0
 P = P.sort_index(); P.index.name = 'date'
 
 # fill single missing prints inside a series' live range (holiday-calendar mismatches), never across starts

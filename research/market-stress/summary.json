@@ -2,139 +2,139 @@
  "sample": {
   "from": "2006-03-06",
   "to": "2026-11-19",
-  "stressEvents": 21,
+  "stressEvents": 22,
   "washouts": 5
  },
  "split": {
   "calm": {
-   "n": 5,
+   "n": 8,
    "spx_3m": {
-    "median": 0.135496,
+    "median": 0.10844,
     "hit": 1.0,
-    "n": 5,
-    "worst": 0.031523
+    "n": 8,
+    "worst": 0.008943
    },
    "spx_12m": {
-    "median": 0.226133,
+    "median": 0.191094,
     "hit": 1.0,
-    "n": 5,
-    "worst": 0.159091
+    "n": 8,
+    "worst": 0.031209
    },
    "spx_dd6m": {
-    "median": -0.000327,
-    "hit": 0.4,
-    "n": 5,
+    "median": -0.005033,
+    "hit": 0.375,
+    "n": 8,
     "worst": -0.084028
    },
    "btc_3m": {
-    "median": 0.287696,
+    "median": 0.347613,
     "hit": 1.0,
-    "n": 4,
-    "worst": 0.249724
+    "n": 7,
+    "worst": 0.111713
    },
    "btc_dd3m": {
-    "median": -0.026265,
-    "hit": 0.25,
-    "n": 4,
-    "worst": -0.082198
+    "median": -0.02965,
+    "hit": 0.2857,
+    "n": 7,
+    "worst": -0.094939
    }
   },
   "stressed": {
-   "n": 16,
+   "n": 14,
    "spx_3m": {
-    "median": 0.037453,
-    "hit": 0.75,
-    "n": 16,
+    "median": 0.024995,
+    "hit": 0.7143,
+    "n": 14,
     "worst": -0.214204
    },
    "spx_12m": {
-    "median": 0.155128,
-    "hit": 0.6667,
-    "n": 15,
-    "worst": -0.089319
+    "median": 0.166139,
+    "hit": 0.6154,
+    "n": 13,
+    "worst": -0.086629
    },
    "spx_dd6m": {
-    "median": -0.058717,
-    "hit": 0.1875,
-    "n": 16,
+    "median": -0.075445,
+    "hit": 0.0714,
+    "n": 14,
     "worst": -0.388541
    },
    "btc_3m": {
     "median": -0.028326,
-    "hit": 0.3636,
-    "n": 11,
+    "hit": 0.3333,
+    "n": 9,
     "worst": -0.442782
    },
    "btc_dd3m": {
-    "median": -0.17592,
-    "hit": 0.1818,
-    "n": 11,
+    "median": -0.166511,
+    "hit": 0.0,
+    "n": 9,
     "worst": -0.501078
    }
   },
   "dollarStressed": {
-   "n": 7,
+   "n": 6,
    "spx_3m": {
-    "median": 0.03288,
-    "hit": 0.8571,
-    "n": 7,
+    "median": 0.021283,
+    "hit": 0.8333,
+    "n": 6,
     "worst": -0.036307
    },
    "spx_12m": {
-    "median": 0.208156,
-    "hit": 0.8333,
-    "n": 6,
+    "median": 0.206431,
+    "hit": 0.8,
+    "n": 5,
     "worst": -0.009544
    },
    "spx_dd6m": {
-    "median": -0.045736,
-    "hit": 0.1429,
-    "n": 7,
+    "median": -0.062611,
+    "hit": 0.0,
+    "n": 6,
     "worst": -0.143267
    },
    "btc_3m": {
-    "median": -0.154714,
+    "median": -0.214129,
     "hit": 0.0,
-    "n": 4,
+    "n": 3,
     "worst": -0.442782
    },
    "btc_dd3m": {
-    "median": -0.274106,
+    "median": -0.372292,
     "hit": 0.0,
-    "n": 4,
+    "n": 3,
     "worst": -0.501078
    }
   },
   "dollarCalm": {
-   "n": 14,
+   "n": 16,
    "spx_3m": {
-    "median": 0.051933,
-    "hit": 0.7857,
-    "n": 14,
+    "median": 0.052405,
+    "hit": 0.8125,
+    "n": 16,
     "worst": -0.214204
    },
    "spx_12m": {
-    "median": 0.162615,
-    "hit": 0.7143,
-    "n": 14,
-    "worst": -0.089319
+    "median": 0.162941,
+    "hit": 0.75,
+    "n": 16,
+    "worst": -0.086629
    },
    "spx_dd6m": {
-    "median": -0.058717,
-    "hit": 0.2857,
-    "n": 14,
+    "median": -0.03584,
+    "hit": 0.25,
+    "n": 16,
     "worst": -0.388541
    },
    "btc_3m": {
-    "median": 0.10378,
-    "hit": 0.7273,
-    "n": 11,
+    "median": 0.249724,
+    "hit": 0.7692,
+    "n": 13,
     "worst": -0.207371
    },
    "btc_dd3m": {
-    "median": -0.082198,
-    "hit": 0.2727,
-    "n": 11,
+    "median": -0.051739,
+    "hit": 0.1538,
+    "n": 13,
     "worst": -0.43414
    }
   }
@@ -146,19 +146,19 @@
     "median": 0.119495,
     "hit": 0.8,
     "n": 5,
-    "worst": -0.032206
+    "worst": -0.072292
    },
    "spx_12m": {
     "median": 0.253838,
     "hit": 1.0,
     "n": 5,
-    "worst": 0.196804
+    "worst": 0.218705
    },
    "spx_dd6m": {
     "median": -0.045736,
     "hit": 0.0,
     "n": 5,
-    "worst": -0.247648
+    "worst": -0.245601
    },
    "btc_3m": {
     "median": 0.260863,
@@ -212,10 +212,10 @@
     "median": 0.053539,
     "hit": 0.6,
     "n": 5,
-    "worst": -0.210504
+    "worst": -0.142642
    },
    "spx_12m": {
-    "median": 0.229599,
+    "median": 0.295362,
     "hit": 1.0,
     "n": 5,
     "worst": 0.185628
@@ -224,7 +224,7 @@
     "median": -0.072961,
     "hit": 0.0,
     "n": 5,
-    "worst": -0.237867
+    "worst": -0.210943
    },
    "btc_3m": {
     "median": 0.337999,
@@ -250,7 +250,7 @@
  "events": [
   {
    "date": "2007-08-16",
-   "score": 68.9,
+   "score": 70.9,
    "funding": "stressed",
    "rates": true,
    "dollar": false,
@@ -259,7 +259,7 @@
   },
   {
    "date": "2008-09-29",
-   "score": 72.1,
+   "score": 66.6,
    "funding": "stressed",
    "rates": true,
    "dollar": false,
@@ -268,7 +268,7 @@
   },
   {
    "date": "2010-05-07",
-   "score": 67.0,
+   "score": 67.8,
    "funding": "stressed",
    "rates": false,
    "dollar": true,
@@ -277,7 +277,7 @@
   },
   {
    "date": "2010-05-20",
-   "score": 84.5,
+   "score": 85.2,
    "funding": "stressed",
    "rates": false,
    "dollar": true,
@@ -286,7 +286,7 @@
   },
   {
    "date": "2011-08-04",
-   "score": 68.9,
+   "score": 67.3,
    "funding": "calm",
    "rates": false,
    "dollar": false,
@@ -295,7 +295,7 @@
   },
   {
    "date": "2011-09-22",
-   "score": 74.4,
+   "score": 69.3,
    "funding": "stressed",
    "rates": false,
    "dollar": true,
@@ -303,26 +303,26 @@
    "btc_3m": null
   },
   {
-   "date": "2015-08-24",
-   "score": 98.8,
-   "funding": "stressed",
-   "rates": true,
+   "date": "2015-08-21",
+   "score": 66.0,
+   "funding": "calm",
+   "rates": false,
    "dollar": false,
-   "spx_3m": 0.1035,
-   "btc_3m": 0.5348
+   "spx_3m": 0.056,
+   "btc_3m": 0.3846
   },
   {
-   "date": "2018-02-08",
-   "score": 65.2,
-   "funding": "stressed",
-   "rates": true,
+   "date": "2018-02-05",
+   "score": 66.8,
+   "funding": "calm",
+   "rates": false,
    "dollar": false,
-   "spx_3m": 0.055,
-   "btc_3m": 0.0942
+   "spx_3m": 0.0089,
+   "btc_3m": 0.3476
   },
   {
    "date": "2018-12-24",
-   "score": 73.6,
+   "score": 69.9,
    "funding": "stressed",
    "rates": true,
    "dollar": false,
@@ -331,7 +331,7 @@
   },
   {
    "date": "2020-02-27",
-   "score": 67.6,
+   "score": 65.5,
    "funding": "stressed",
    "rates": true,
    "dollar": false,
@@ -340,7 +340,7 @@
   },
   {
    "date": "2020-05-13",
-   "score": 75.4,
+   "score": 76.6,
    "funding": "calm",
    "rates": false,
    "dollar": false,
@@ -348,8 +348,17 @@
    "btc_3m": 0.2497
   },
   {
+   "date": "2020-06-11",
+   "score": 67.9,
+   "funding": "calm",
+   "rates": false,
+   "dollar": false,
+   "spx_3m": 0.1123,
+   "btc_3m": 0.1117
+  },
+  {
    "date": "2020-10-28",
-   "score": 70.2,
+   "score": 73.2,
    "funding": "calm",
    "rates": false,
    "dollar": false,
@@ -357,17 +366,26 @@
    "btc_3m": 1.2931
   },
   {
-   "date": "2022-01-24",
-   "score": 65.1,
+   "date": "2021-01-27",
+   "score": 66.7,
+   "funding": "calm",
+   "rates": false,
+   "dollar": false,
+   "spx_3m": 0.1153,
+   "btc_3m": 0.8015
+  },
+  {
+   "date": "2022-01-21",
+   "score": 67.9,
    "funding": "stressed",
    "rates": true,
    "dollar": false,
-   "spx_3m": -0.0259,
-   "btc_3m": 0.1038
+   "spx_3m": -0.0287,
+   "btc_3m": 0.0901
   },
   {
    "date": "2022-02-23",
-   "score": 69.6,
+   "score": 69.5,
    "funding": "stressed",
    "rates": true,
    "dollar": false,
@@ -376,7 +394,7 @@
   },
   {
    "date": "2022-04-26",
-   "score": 69.8,
+   "score": 69.1,
    "funding": "stressed",
    "rates": true,
    "dollar": true,
@@ -385,7 +403,7 @@
   },
   {
    "date": "2022-05-09",
-   "score": 79.6,
+   "score": 77.7,
    "funding": "stressed",
    "rates": true,
    "dollar": true,
@@ -394,7 +412,7 @@
   },
   {
    "date": "2022-06-13",
-   "score": 71.9,
+   "score": 68.6,
    "funding": "stressed",
    "rates": true,
    "dollar": false,
@@ -402,17 +420,8 @@
    "btc_3m": -0.0052
   },
   {
-   "date": "2022-10-12",
-   "score": 66.3,
-   "funding": "stressed",
-   "rates": true,
-   "dollar": true,
-   "spx_3m": 0.1135,
-   "btc_3m": -0.0638
-  },
-  {
    "date": "2024-08-05",
-   "score": 72.4,
+   "score": 75.1,
    "funding": "calm",
    "rates": false,
    "dollar": false,
@@ -420,17 +429,17 @@
    "btc_3m": 0.256
   },
   {
-   "date": "2025-04-03",
-   "score": 65.9,
-   "funding": "calm",
-   "rates": false,
+   "date": "2025-04-04",
+   "score": 98.1,
+   "funding": "stressed",
+   "rates": true,
    "dollar": false,
-   "spx_3m": 0.1544,
-   "btc_3m": 0.3194
+   "spx_3m": 0.2269,
+   "btc_3m": 0.2885
   },
   {
    "date": "2026-03-27",
-   "score": 67.4,
+   "score": 67.9,
    "funding": "stressed",
    "rates": true,
    "dollar": true,
@@ -440,34 +449,34 @@
  ],
  "zones": {
   "calm": {
-   "sessions": 4629,
-   "share": 0.8881,
-   "spx_3m": 0.035994,
-   "spx_3m_up": 0.723,
-   "spx_12m": 0.125818,
-   "spx_12m_up": 0.7997,
+   "sessions": 4642,
+   "share": 0.8906,
+   "spx_3m": 0.035995,
+   "spx_3m_up": 0.7236,
+   "spx_12m": 0.125939,
+   "spx_12m_up": 0.7996,
    "btc_3m": 0.085329,
-   "btc_n": 2715
+   "btc_n": 2711
   },
   "uneasy": {
-   "sessions": 274,
-   "share": 0.0526,
-   "spx_3m": 0.053719,
-   "spx_3m_up": 0.7398,
-   "spx_12m": 0.150933,
-   "spx_12m_up": 0.7054,
-   "btc_3m": -0.0124,
+   "sessions": 279,
+   "share": 0.0535,
+   "spx_3m": 0.053287,
+   "spx_3m_up": 0.7263,
+   "spx_12m": 0.159122,
+   "spx_12m_up": 0.711,
+   "btc_3m": -0.021742,
    "btc_n": 188
   },
   "stressed": {
-   "sessions": 56,
-   "share": 0.0107,
-   "spx_3m": 0.045423,
-   "spx_3m_up": 0.6071,
-   "spx_12m": 0.081771,
-   "spx_12m_up": 0.6364,
-   "btc_3m": -0.033763,
-   "btc_n": 36
+   "sessions": 64,
+   "share": 0.0123,
+   "spx_3m": 0.032201,
+   "spx_3m_up": 0.5781,
+   "spx_12m": 0.132297,
+   "spx_12m_up": 0.7302,
+   "btc_3m": 0.059521,
+   "btc_n": 41
   },
   "panic": {
    "sessions": 3,
@@ -480,34 +489,34 @@
    "btc_n": 3
   },
   "washout": {
-   "sessions": 63,
-   "share": 0.0121,
-   "spx_3m": 0.141665,
-   "spx_3m_up": 0.619,
-   "spx_12m": 0.336757,
+   "sessions": 46,
+   "share": 0.0088,
+   "spx_3m": 0.168326,
+   "spx_3m_up": 0.8261,
+   "spx_12m": 0.487356,
    "spx_12m_up": 1.0,
-   "btc_3m": 0.389028,
-   "btc_n": 34
+   "btc_3m": 0.394032,
+   "btc_n": 33
   },
   "crest": {
-   "sessions": 23,
-   "share": 0.0044,
-   "spx_3m": 0.02751,
-   "spx_3m_up": 0.5217,
-   "spx_12m": 0.291787,
+   "sessions": 31,
+   "share": 0.0059,
+   "spx_3m": -0.01471,
+   "spx_3m_up": 0.4194,
+   "spx_12m": 0.236453,
    "spx_12m_up": 1.0,
-   "btc_3m": 0.348204,
-   "btc_n": 7
+   "btc_3m": 0.34328,
+   "btc_n": 8
   },
   "clearing": {
-   "sessions": 121,
-   "share": 0.0232,
-   "spx_3m": 0.059891,
-   "spx_3m_up": 0.6694,
-   "spx_12m": 0.298241,
+   "sessions": 104,
+   "share": 0.02,
+   "spx_3m": 0.057949,
+   "spx_3m_up": 0.6346,
+   "spx_12m": 0.308559,
    "spx_12m_up": 1.0,
-   "btc_3m": 0.272382,
-   "btc_n": 16
+   "btc_3m": 0.277356,
+   "btc_n": 15
   },
   "all": {
    "sessions": 5212,
@@ -520,7 +529,7 @@
  "matched": {
   "n": 4,
   "episodes": [
-   "2008-10-10",
+   "2008-10-22",
    "2011-08-08",
    "2020-03-09",
    "2025-04-04"

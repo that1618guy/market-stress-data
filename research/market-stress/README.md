@@ -1,6 +1,6 @@
 # Market Stress Index: research notes
 
-Written Nov 20, 2026. Sample: Mar 6, 2006 (first VVIX print) to Nov 19, 2026, 5,212 sessions. Nov 20, 2026 is the live session and uses the 3:57pm ET values from the reference screenshot (VIX 40.03, VVIX 146.36, COR1M 44.71, SPY 687.32), so treat that day as provisional until the publisher writes the real close.
+Written Nov 20, 2026; re-run Nov 21, 2026 with the 30 / 40 / 30 weights. Sample: Mar 6, 2006 (first VVIX print) to Nov 19, 2026, 5,212 sessions. Nov 20, 2026 is the live session and uses its official closes, the same as the live feed: S&P 500 6,910.39, SPY 689.81, VIX 35.89, VVIX 138.03. COR1M is still the 3:57pm ET value from the reference screenshot (44.71) and VIX3M carries Nov 19 forward (27.03): neither official close could be fetched for this run. Neither is part of the reading.
 
 ## Where it came from
 
@@ -18,9 +18,9 @@ The rebuilt scale gives 81.3 on Nov 20, the same as the screenshot. The thesis: 
 
 ## What the backtest changed
 
-**COR1M is out.** Its range drifted with market structure: median 61.5 in 2010, 10.2 in 2026. The "COR1M > 60" trigger last printed on Oct 30, 2020. In April 2025, one of the cleanest washouts on record, COR1M topped at 49.9, so the original's crash trigger never fired. Scoring COR1M against its own last year fixes the drift, but the ablation showed it adds nothing: the same washouts get called with or without it (with it, 2008 is called four days earlier), and the only extra call it adds is May 9, 2022 (S&P +3.3% three months later, Bitcoin −21.4%).
+**COR1M is out.** Its range drifted with market structure: median 61.5 in 2010, 10.2 in 2026. The "COR1M > 60" trigger last printed on Oct 30, 2020. In April 2025, one of the cleanest washouts on record, COR1M topped at 49.9, so the original's crash trigger never fired. Scoring COR1M against its own last year fixes the drift, but the ablation showed it adds nothing: the same washouts get called with or without it (with it, 2008 is called on Oct 6 instead of Oct 10, both at equal weights), and the only extra call it adds is May 9, 2022 (S&P +3.3% three months later, Bitcoin −21.4%).
 
-**DXY and MOVE stay, but outside the reading.** As inputs to the 0–100 score they knock out May 2010 and Aug 2011 (S&P worst drop after Aug 2011: −1.8%), add May 2022, and the median worst drop after entry gets worse (−8.5% against −4.6%). As a separate check on the kind of flush, they are the most useful thing tested.
+**DXY and MOVE stay, but outside the reading.** As inputs to the 0–100 score they knock out May 2010 and Aug 2011 (S&P worst drop after Aug 2011: −1.8%) and miss today's washout (the five-input reading is 76.6 at the Nov 20 close), and the median worst drop after entry gets worse (−6.7% against −4.6%). As a separate check on the kind of flush, they are the most useful thing tested.
 
 ## The model
 
@@ -42,22 +42,24 @@ All thresholds are round numbers set before looking at outcomes. Only the COR1M 
 
 The reading weights its three parts 30 / 40 / 30 (fear, fragility, damage) instead of equal thirds. These are inverse-volatility weights: each part is weighted by one over its standard deviation since 2006, so on a normal day each moves the reading about as much as the others. They never look at outcomes.
 
-A sensitivity test (Nov 21, 2026) scored all 231 weight splits in 5% steps: 95 give the same five washouts. Equal thirds sits on the edge of that zone, where slightly less VVIX or more damage adds a weak May 2022 call. 30/40/30 sits inside it and keeps the same calls in 8 of 16 range and threshold changes, against 6 for equal thirds. The only call that moves is 2008's first washout close, from Oct 10 to Oct 22. The best weights fitted on each half of history flipped (0/25/75 on 2006-2015, 0/75/25 on 2016-2026), and the first added two weak 2022 calls when tested on the second half.
+A sensitivity test (Nov 21, 2026, [`weights.py`](weights.py), output in `weights.json`) scored all 231 weight splits in 5% steps: 95 give the same five washouts. Equal thirds sits on the edge of that zone, where slightly less VVIX or more damage adds a weak May 2022 call. 30/40/30 sits inside it and keeps the same calls in 8 of 16 range and threshold changes, against 6 for equal thirds. The only call that moves is 2008's first washout close, from Oct 10 to Oct 22. The best weights fitted on each half of history flipped (0/25/75 on 2006-2015, 0/75/25 on 2016-2026), and the first added two weak 2022 calls when tested on the second half.
+
+`weights.py` compares every variant against the equal-thirds calls. Its range and threshold section runs at equal thirds (6 of 16 keep the same calls); the 30/40/30 count (8 of 16) comes from running that section with weights (0.3, 0.4, 0.3).
 
 ## Results
 
-**Washouts since 2006:** Oct 10, 2008; May 20, 2010; Aug 8, 2011; Mar 9, 2020; Apr 4, 2025. Nov 20, 2026 is the sixth (reading 96.4, higher than 99.6% of sessions since 2006).
+**Washouts since 2006:** Oct 22, 2008; May 20, 2010; Aug 8, 2011; Mar 9, 2020; Apr 4, 2025. Nov 20, 2026 is the sixth (reading 84.9 at the Nov 20 close, higher than 99.2% of sessions since 2006).
 
 Buying the first washout close:
 
 | | S&P 3 months | S&P 12 months | S&P worst drop, next 6 months | Bitcoin 3 months |
 |---|---|---|---|---|
 | Original's rules (4 washouts) | +6.2%, 3 of 4 up | +25.3%, 3 of 4 up | −11.6% median, −36.0% worst | +23.3% (2020 only) |
-| This model (5 washouts) | +11.9%, 4 of 5 up | +25.4%, 5 of 5 up | −4.6% median, −24.8% worst | +26.1% (2020, 2025) |
+| This model (5 washouts) | +11.9%, 4 of 5 up | +25.4%, 5 of 5 up | −4.6% median, −24.6% worst | +26.1% (2020, 2025) |
 
 Every washout so far had a lower close still to come (5 of 5).
 
-**The funding check at washouts.** Funding was stressed at the first washout close every time. In the four episodes where it calmed before the episode ended (after 2, 8, 14 and 31 sessions; May 2010 never calmed), buying the first calm close instead of the first washout close:
+**The funding check at washouts.** Funding was stressed at the first washout close every time. In the four episodes where it calmed before the episode ended (after 2, 8, 14 and 23 sessions; May 2010 never calmed), buying the first calm close instead of the first washout close:
 
 | Same 4 washouts | S&P 3 months | S&P 12 months | S&P worst drop | Bitcoin 3 months (2020, 2025) |
 |---|---|---|---|---|
@@ -66,21 +68,21 @@ Every washout so far had a lower close still to come (5 of 5).
 
 The gain is mostly less pain, not more return, and most of it is 2020 (worst drop −18.5% from the washout, −2.8% from the calm close). 2008 still fell 20.6% after funding calmed.
 
-**The funding check on every stress flush.** 21 times since 2006 the reading crossed 65 after a reset under 40:
+**The funding check on every stress flush.** 22 times since 2006 the reading crossed 65 after a reset under 40:
 
 | | S&P 3 months | S&P worst drop | Bitcoin 3 months |
 |---|---|---|---|
-| Funding calm (5) | +13.6% median, 5 of 5 up | 0.0% median | +28.8%, 4 of 4 up |
-| Funding stressed (16) | +3.7%, 12 of 16 up | −5.9% | −2.8%, 4 of 11 up |
-| Dollar stressed (7) | +3.3%, 6 of 7 up | −4.6% | −15.5%, 0 of 4 up |
+| Funding calm (8) | +10.8% median, 8 of 8 up | −0.5% median | +34.8%, 7 of 7 up |
+| Funding stressed (14) | +2.5%, 10 of 14 up | −7.5% | −2.8%, 3 of 9 up |
+| Dollar stressed (6) | +2.1%, 5 of 6 up | −6.3% | −21.4%, 0 of 3 up |
 
-Robustness: across dollar lines from +1% to +3% and MOVE lines from the 80th to 95th percentile, calm flushes stayed 100% up at three months (medians +12.0% to +14.5%) and stressed flushes stayed between +2.5% and +4.5%.
+Robustness: across dollar lines from +1% to +3% and MOVE lines from the 80th to 95th percentile, calm flushes stayed 90% to 100% up at three months (medians +10.8% to +11.4%) and stressed flushes stayed between +1.7% and +3.7%.
 
 **Clearing as an entry** (20 points off the crest for 3 sessions) did not beat the washout close: S&P +5.4% at 3 months (3 of 5 up), worst drop −7.3%. It stays on the page as a state, not as the entry rule.
 
 ## Caveats
 
-- Small samples: 5 washouts, 21 stress flushes, Bitcoin only from Sep 2014 (2 washouts, 15 flushes). 2022 contributes six of the stressed flushes, all in one rates-driven bear market.
+- Small samples: 5 washouts, 22 stress flushes, Bitcoin only from Sep 2014 (2 washouts, 16 flushes). 2022 contributes five of the stressed flushes, all in one rates-driven bear market.
 - Forward windows overlap inside episodes; the medians above use one entry per episode or per flush, not every day.
 - VVIX history has gaps in 2006 (43 sessions without a reading). No episode falls there.
 - The research copy of MOVE has no prints from Oct 26 to Nov 18, 2026 (source gap). That only affects the live percentile in this offline build; the publisher pulls the full series.
@@ -88,7 +90,8 @@ Robustness: across dollar lines from +1% to +3% and MOVE lines from the 80th to 
 ## Files
 
 - `engine.py` (pandas, research) and `scripts/market_stress_publish.py` (standard library, production) compute the same thing. Checked session by session over 5,170 sessions: largest score difference 1e-12, no state, funding or percentile mismatches.
-- `backtest.py` writes `out/results.json`; `ablation.py` runs the drop-one-input and five-input tests; `summary.py` writes `summary.json`, the numbers the page shows.
+- `backtest.py` writes `results.json`; `ablation.py` runs the drop-one-input and five-input tests (the drop-one variants weight their remaining inputs equally, so "drop herding" is the equal-thirds model and "final" is 30/40/30); `summary.py` writes `summary.json`; `weights.py` runs the weight and range sensitivity test into `weights.json`.
+- Re-run (from the repo root): `python3 -I research/market-stress/backtest.py research/market-stress/data research/market-stress`, then `summary.py research/market-stress/results.json research/market-stress/data/panel.csv research/market-stress/summary.json`, `ablation.py` and `weights.py` with the same data and output folders. `backtest.py` also writes `washout_daily.csv`, which is not kept.
 - `build_data.py` assembles the panel from the public sources listed below.
 
 Sources: Cboe daily history files (VIX, VVIX, VIX3M, COR1M); S&P 500, SPY, DXY, MOVE and BTC-USD daily closes from Yahoo Finance, read from public GitHub mirrors for this offline run; COR1M Oct 28 to Nov 19, 2026 from Cboe's own CSV.
