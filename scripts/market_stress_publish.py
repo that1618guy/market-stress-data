@@ -305,6 +305,12 @@ def main(out_path, local=None):
             o["spx_" + lab] = r(X["spx"][k + h] / X["spx"][k] - 1, 4) if k + h <= i - 1 else None
         w = X["spx"][k + 1:min(k + 127, i)]
         o["spx_dd6m"] = r(min(w) / X["spx"][k] - 1, 4) if len(w) >= 21 else None
+        if len(w) >= 21:
+            j = min(range(len(w)), key=lambda n: w[n])
+            o["spx_low_date"] = cal[k + 1 + j].isoformat()
+            o["spx_low_sessions"] = j + 1
+        else:
+            o["spx_low_date"] = o["spx_low_sessions"] = None
         b0 = btc_at(cal[k])
         for lab, h in (("m1", 30), ("m3", 91), ("m12", 365)):
             t = cal[k] + dt.timedelta(days=h)
