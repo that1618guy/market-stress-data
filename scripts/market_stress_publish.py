@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Publishes the Market Stress Index (State of Blocks, Macro column) as one JSON file.
 
-The reading, 0-100, a third each:
+The reading, 0-100, weighted 30 / 40 / 30 (fear / fragility / damage):
   fear       VIX                        scored 15 -> 40
   fragility  VVIX                       scored 90 -> 150
   damage     S&P 500 under its 100-day  scored 0% -> 10% under
@@ -33,7 +33,8 @@ YAHOO = "https://query{}.finance.yahoo.com/v8/finance/chart/{}?period1={}&period
 UA = {"user-agent": "Mozilla/5.0 (sob-washout; +https://stateofblocks.com)"}
 
 # Every threshold lives here and is published as-is in "params", so the page never types one.
-P = {"vixLo": 15.0, "vixHi": 40.0, "vvixLo": 90.0, "vvixHi": 150.0, "damageFull": 0.10, "ma": 100,
+P = {"wFear": 30.0, "wFragility": 40.0, "wDamage": 30.0,
+     "vixLo": 15.0, "vixHi": 40.0, "vvixLo": 90.0, "vvixHi": 150.0, "damageFull": 0.10, "ma": 100,
      "rvDays": 20, "rvLine": 25.0, "washoutMin": 80.0, "clearDrop": 20.0, "clearHold": 3, "episodeEnd": 40.0,
      "zones": [[0, 40, "calm"], [40, 65, "uneasy"], [65, 80, "stressed"], [80, 101, "panic"]],
      "ratesWin": 252, "ratesMin": 201, "ratesLine": 0.90, "dollarDays": 20, "dollarLine": 2.0,
@@ -214,10 +215,9 @@ def compute(src):
     ma = rolling_mean(spx, P["ma"])
     dist = [None if m is None else s / m - 1 for s, m in zip(spx, ma)]
     rv20 = rv(spx, P["rvDays"])
-    third = 100 / 3
-    fear = [None if v is None else third * clip01((v - P["vixLo"]) / (P["vixHi"] - P["vixLo"])) for v in vix]
-    frag = [None if v is None else third * clip01((v - P["vvixLo"]) / (P["vvixHi"] - P["vvixLo"])) for v in vvix]
-    dmg = [None if x is None else third * clip01(-x / P["damageFull"]) for x in dist]
+    fear = [None if v is None else P["wFear"] * clip01((v - P["vixLo"]) / (P["vixHi"] - P["vixLo"])) for v in vix]
+    frag = [None if v is None else P["wFragility"] * clip01((v - P["vvixLo"]) / (P["vvixHi"] - P["vvixLo"])) for v in vvix]
+    dmg = [None if x is None else P["wDamage"] * clip01(-x / P["damageFull"]) for x in dist]
     score = [None if None in (a, b, c) else a + b + c for a, b, c in zip(fear, frag, dmg)]
     s_trend = [None if x is None else x < 0 for x in dist]
     s_vol = [None if x is None else x > P["rvLine"] for x in rv20]

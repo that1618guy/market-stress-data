@@ -1,7 +1,7 @@
 """Market Stress Index engine. State of Blocks, Macro column.
 
 The reading (0-100) asks one question: how close are US equities to a washout, the forced-
-selling flush that historically marks the buy? Three inputs, a third of the reading each:
+selling flush that historically marks the buy? Three inputs, weighted 30 / 40 / 30:
 
   fear       VIX                        15 -> 40
   fragility  VVIX (the VIX of the VIX)  90 -> 150
@@ -76,10 +76,10 @@ def score(p: pd.DataFrame, method: str = "washout") -> pd.DataFrame:
         o["seal_herd"] = (p["cor1m"] > 60).astype(float).where(p["cor1m"].notna())
         pill = ["fear", "fragility", "herding", "damage"]; seals.append("seal_herd")
     elif method in ("washout", "washout4"):
-        w = 100 / 3 if method == "washout" else 25
-        o["fear"] = w * _c01((p["vix"] - VIX_LO) / (VIX_HI - VIX_LO))
-        o["fragility"] = w * _c01((p["vvix"] - VVIX_LO) / (VVIX_HI - VVIX_LO))
-        o["damage"] = w * _c01(-t["dist"] / DAMAGE_FULL)
+        wf, wv, wd = (30, 40, 30) if method == "washout" else (25, 25, 25)  # inverse-volatility weights, see README "Weights"
+        o["fear"] = wf * _c01((p["vix"] - VIX_LO) / (VIX_HI - VIX_LO))
+        o["fragility"] = wv * _c01((p["vvix"] - VVIX_LO) / (VVIX_HI - VVIX_LO))
+        o["damage"] = wd * _c01(-t["dist"] / DAMAGE_FULL)
         pill = list(PILLARS)
         if method == "washout4":
             hp = rolling_pct(p["cor1m"], 252)

@@ -24,7 +24,7 @@ The rebuilt scale gives 81.3 on Nov 20, the same as the screenshot. The thesis: 
 
 ## The model
 
-Reading, 0 to 100, a third each:
+Reading, 0 to 100, weighted 30 / 40 / 30 (see Weights):
 
 - Fear: VIX, scored 15 to 40
 - Fragility: VVIX, scored 90 to 150
@@ -37,6 +37,12 @@ States: calm under 40, uneasy 40–65, stressed 65–80, panic 80+. Washout = bo
 Funding check: rates stressed when MOVE is in the top 10% of its last 252 sessions; dollar stressed when DXY is up 2%+ over 20 sessions. Either one = funding stressed.
 
 All thresholds are round numbers set before looking at outcomes. Only the COR1M decision and the funding check's placement (layer, not input) were made after seeing results; both are reported with the alternatives below.
+
+## Weights
+
+The reading weights its three parts 30 / 40 / 30 (fear, fragility, damage) instead of equal thirds. These are inverse-volatility weights: each part is weighted by one over its standard deviation since 2006, so on a normal day each moves the reading about as much as the others. They never look at outcomes.
+
+A sensitivity test (Nov 21, 2026) scored all 231 weight splits in 5% steps: 95 give the same five washouts. Equal thirds sits on the edge of that zone, where slightly less VVIX or more damage adds a weak May 2022 call. 30/40/30 sits inside it and keeps the same calls in 8 of 16 range and threshold changes, against 6 for equal thirds. The only call that moves is 2008's first washout close, from Oct 10 to Oct 22. The best weights fitted on each half of history flipped (0/25/75 on 2006-2015, 0/75/25 on 2016-2026), and the first added two weak 2022 calls when tested on the second half.
 
 ## Results
 
