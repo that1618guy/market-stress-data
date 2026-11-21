@@ -348,7 +348,16 @@ def main(out_path, local=None):
     def series(k_from, step=1, keep=None):
         return [[ts(cal[k]), r(X["score"][k], 1)] + ([STATE_CODE.get(X["state"][k], 0)] if keep else [])
                 for k in range(k_from, i + 1, step) if X["score"][k] is not None]
-    weekly = [[ts(cal[k]), r(X["score"][k], 1)] for k in range(k0, i + 1) if cal[k].weekday() == 4 or k == i]
+    # one point per week: the week's highest daily reading, stamped with its last session (the latest for the current
+    # week), so a mid-week washout reads as one and a week whose Friday was a holiday is still there
+    weeks = {}
+    for k in range(k0, i + 1):
+        weeks.setdefault(cal[k].isocalendar()[:2], []).append(k)
+    week_last = [ks[-1] for ks in weeks.values()]
+    weekly = []
+    for ks in weeks.values():
+        vs = [X["score"][k] for k in ks if X["score"][k] is not None]
+        weekly.append([ts(cal[ks[-1]]), r(max(vs), 1) if vs else None])
     btc_daily = [[ts(d), r(btc[d], 0)] for d in bdays if d > asof - dt.timedelta(days=380) and d <= asof]
     btc_weekly = [[ts(d), r(btc[d], 0)] for d in bdays if d.weekday() == 4 and d <= asof]
 
@@ -363,7 +372,7 @@ def main(out_path, local=None):
     inputs_hist = [[ts(cal[k]), r(X["vix"][k]), r(X["vvix"][k]), r(X["dist"][k] * 100 if X["dist"][k] is not None else None),
                     r(X["rv20"][k]), r(X["move"][k]), r(q90(k), 1), r(X["d20"][k])] for k in range(k6, i + 1)]
     spx_daily = [[ts(cal[k]), r(X["spx"][k]), r(X["ma"][k])] for k in range(max(k0, i - P["dailySessions"] + 1), i + 1)]
-    spx_weekly = [[ts(cal[k]), r(X["spx"][k])] for k in range(k0, i + 1) if cal[k].weekday() == 4 or k == i]
+    spx_weekly = [[ts(cal[k]), r(X["spx"][k])] for k in week_last]  # the close of the same last session as history.weekly
 
     def pct_since(series, k, flip=False):
         v = series[k]
