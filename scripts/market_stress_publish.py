@@ -243,6 +243,16 @@ def r(x, k=2):
     return None if x is None else round(x, k)
 
 
+def write_status(out_path, asof):
+    """status.json beside the reading: when the feed last ran cleanly. The reading is committed only when it
+    changes, so without this a quiet weekend looks like a dead feed. Refused or failed runs never get here."""
+    path = os.path.join(os.path.dirname(os.path.abspath(out_path)), "status.json")
+    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(path))
+    with os.fdopen(fd, "w") as fh:
+        json.dump({"checked": int(time.time()), "asof": asof.isoformat()}, fh, separators=(",", ":"))
+    os.replace(tmp, path)
+
+
 def main(out_path, local=None):
     src = load_local(local) if local else load_remote()
     X = compute(src)
@@ -493,7 +503,10 @@ def main(out_path, local=None):
             prev = json.load(open(out_path)); prev.pop("published", None)
             cur = dict(out); cur.pop("published", None)
             if json.dumps(prev, sort_keys=True) == json.dumps(json.loads(json.dumps(cur)), sort_keys=True):
-                print(f"{asof}  unchanged, nothing written"); return
+                print(f"{asof}  unchanged, nothing written")
+                if not local:
+                    write_status(out_path, asof)
+                return
         except (ValueError, OSError):
             pass
     tmpdir = os.path.dirname(os.path.abspath(out_path))
@@ -501,6 +514,8 @@ def main(out_path, local=None):
     with os.fdopen(fd, "w") as fh:
         json.dump(out, fh, separators=(",", ":"))
     os.replace(tmp, out_path)
+    if not local:
+        write_status(out_path, asof)
     fs = fstate or "unknown"
     print(f"{asof}  {x:.1f}  {X['state'][i]}  seals trend={out['seals']['trend']} vol={out['seals']['vol']}  funding {fs}"
           f"  (MOVE pct {out['inputs']['movePct']}, DXY 20d {out['inputs']['dxy20']}%)")

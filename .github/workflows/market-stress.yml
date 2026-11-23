@@ -27,11 +27,13 @@ jobs:
       - name: Compute the Market Stress Index
         run: python3 scripts/market_stress_publish.py docs/market-stress.json
       - name: Commit the new reading
+        # market-stress.json only when it changed; status.json on every clean run, so the page can say when the feed last checked
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/market-stress.json
+          git add docs/market-stress.json docs/status.json
           git diff --cached --quiet && exit 0
-          git commit -m "Update market-stress.json $(date -u +%F)"
+          if git diff --cached --quiet -- docs/market-stress.json; then msg="Feed checked $(date -u '+%F %H:%M') UTC"; else msg="Update market-stress.json $(date -u +%F)"; fi
+          git commit -m "$msg"
           git pull --rebase
           git push
